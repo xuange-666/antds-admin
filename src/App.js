@@ -1,13 +1,17 @@
-import './App.css';
-import React from 'react';
-import { Button } from 'antd';
+// import './App.less';
+// import React from 'react';
+// import { BrowserRouter as Router, Route,Routes } from "react-router-dom";
+import { BrowserRouter as Router} from "react-router-dom";
+import { renderRoutes } from "react-router-config";
+import routes from "./routes/routes";
 
 function App() {
   return (
-    <div className="App">
-      <h3>hello world</h3>
-      <Button type='primary'>按钮</Button>
-    </div>
+    <Router>
+      {
+        renderRoutes(routes)
+      }
+    </Router>
   );
 }
 
