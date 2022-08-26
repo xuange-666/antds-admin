@@ -8,23 +8,27 @@ import NotFound from "../404/404";
 //统一管理路由
 export default [
     {
-        path:"/",
+        path:"/home",
         component:Home,
+        auth:true,
         exact:true
     },
     {
         path:"/login",
         component:Login,
+        auth:false,
         exact:true
     },
     {
         path:"/404",
         component:NotFound,
+        auth:false,
         exact:true
     },
     {
         path:"/pages",
         component:Pages,
+        auth:true,
         routes:[
             {
                 path:"/pages/news",

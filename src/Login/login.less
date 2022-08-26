@@ -32,7 +32,6 @@
     height: 100%;
     width: 100%;
     border-radius: 0;
-    // background: #f8f8f9;
 
     .header {
       font-size: 25px;
@@ -44,67 +43,46 @@
 
     .submit-btn {
       width: 100%;
-      background-color: #2959f2;
-      color: #fff;
-      border: none;
-      outline: none;
     }
 
-    .ant-form-item-explain-error{
+    .error-tip {
       height: 30px;
       line-height: 30px;
       text-align: center;
       color: red;
-      margin-top: -30px;
     }
 
-    .ant-input-prefix{
-      color: black;
-      position: fixed;
-      top: 13px;
-      left: 20px;
-    }
+    .tip {
+      color: #ccc;
+      text-align: center;
 
-    .anticon-close-circle{
-      color: #c1c1c1;
-      position: fixed;
-      top: 15px;
-      left: 250px;
-    }
-
-    .anticon-eye-invisible{
-      color: #c1c1c1;
-      position: fixed;
-      top: 15px;
-      left: 250px;
-    }
-
-    .ant-input-password-icon{
-      color: #c1c1c1;
-      position: fixed;
-      top: 15px;
-      left: 250px;
+      span {
+        margin-right: 8px;
+      }
     }
 
     .form-item {
       transition-delay: 5s;
       transition: 500ms;
       transform: translateX(100%);
+
       &:nth-child(2n) {
         transform: translateX(-100%);
       }
+
       &.active {
         transform: translateX(0);
       }
     }
   }
-    .ant-input {
-      padding-left: 50px;
+
+ 
+    .ant-input-affix-wrapper {
       height: 42px;
       align-items: center;
-      outline: none;
-      width: 230px;
-      margin-bottom: 30px;
+      input {
+        height: 100%;
+      }
     }
 
     .ant-btn {

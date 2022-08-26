@@ -5,9 +5,13 @@ import {Input, Button, Form} from 'antd';
 import { useState,useEffect } from 'react';
 import {LockOutlined, UserOutlined} from '@ant-design/icons';
 import './login.less';
-function Login(){
-    function submit(){
+function Login(props){
+    console.log(props)
+    function submit(values){
         console.log("success");
+        console.log(values)
+        //将values登录信息存储到本地
+        window.localStorage.setItem("loginstatus",JSON.stringify(values))
         //校验处理
         window.location.href="http://localhost:3000/"
     }
@@ -18,34 +22,34 @@ function Login(){
     const formItemStyleName = states.isMount ? 'form-item active' : 'form-item';
     return(
         <div>
-            <Helmet title='欢迎登陆'></Helmet>
-            <div className='left'>
+            <Helmet title="欢迎登陆"></Helmet>
+            <div className="left">
                 <Banner></Banner>
             </div>
-            <div className='right'>
-                <div className='box'>
-                    <Form name='login' onFinish={submit}>
+            <div className="right">
+                <div className="box">
+                    <Form name="login" className="" onFinish={submit}>
                         <div className={formItemStyleName}>
-                            <div className='header'>欢迎登录</div>
+                            <div className="header">欢迎登录</div>
                         </div>
                         <div className={formItemStyleName}>
                             <Form.Item name="userName" rules={[{required: true, message: '请输入用户名'}]}>
-                                <Input allowClear prefix={<UserOutlined className="site-form-item-icon"/>} placeholder="用户名" className='input'/>
+                                <Input allowClear prefix={<UserOutlined className="site-form-item-icon"/>} placeholder="用户名"/>
                             </Form.Item>
                         </div>
                         <div className={formItemStyleName}>
                             <Form.Item name="password" rules={[{required: true, message: '请输入密码'}]}>
-                                <Input.Password prefix={<LockOutlined className="site-form-item-icon"/>} placeholder="密码" className='input'/>
+                                <Input.Password prefix={<LockOutlined className="site-form-item-icon"/>} placeholder="密码"/>
                             </Form.Item>
                         </div>
                         <div className={formItemStyleName}>
                             <Form.Item shouldUpdate={true}>
                                 {() => (
-                                    <Button className="submit-btn" loading={states.loading} htmlType="submit">
+                                    <Button className="submit-btn" loading={states.loading} type="primary" htmlType="submit">
                                         登录
                                     </Button>
                                 )}
-                            </Form.Item>   
+                             </Form.Item>   
                         </div>
                     </Form>
                 </div>
