@@ -1,8 +1,14 @@
 {
-    "login":[
-        {
-            "admin":"admin",
-            "pwd":111
-        }
-    ]
+  "logins": [
+    {
+      "id": 1,
+      "admin": "admin",
+      "pwd": 1111
+    },
+    {
+      "userName": "admmin",
+      "password": "111",
+      "id": 2
+    }
+  ]
 }
