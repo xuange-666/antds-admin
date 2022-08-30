@@ -7,7 +7,7 @@ function Auth(props){  //统一管理路由
         return pathname.search(item.path)!==-1;
     })
     //获取本地登录状态
-    let isLogin = JSON.parse(window.localStorage.getItem("loginstatus"))
+    let isLogin = JSON.parse(window.localStorage.getItem("TOKEN"))
     if(pathname === "/"){   //首页重定向到登录页
         return <Redirect to="/login"></Redirect>
     }

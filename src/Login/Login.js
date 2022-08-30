@@ -4,16 +4,28 @@ import Banner from '../component/banner';
 import {Input, Button, Form} from 'antd';
 import { useState,useEffect } from 'react';
 import {LockOutlined, UserOutlined} from '@ant-design/icons';
+import axios from 'axios';
+import qs from 'qs';
 import './login.less';
 function Login(props){
     console.log(props)
     function submit(values){
         console.log("success");
         console.log(values)
+        let {userName,password} = values
+        axios.post('http://localhost:9000/login',qs.stringify({userName,password}))
+        .then(function(response){
+            console.log(response);
+            window.localStorage.setItem("TOKEN",JSON.stringify(values))
+            window.location.href="http://localhost:3000/"
+        })
+        .catch(function(error){
+            console.log(error);
+        })
         //将values登录信息存储到本地
-        window.localStorage.setItem("loginstatus",JSON.stringify(values))
+        // window.localStorage.setItem("loginstatus",JSON.stringify(values))
         //校验处理
-        window.location.href="http://localhost:3000/"
+        // window.location.href="http://localhost:3000/"
     }
     const [states,setStates] = useState({isMount:false,loading:false})
     useEffect(() => {

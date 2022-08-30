@@ -3,6 +3,9 @@ import { Helmet } from 'react-helmet';
 //-----------------------------------
 import { Layout, Menu, Breadcrumb } from 'antd';
 import { Button, Tabs } from 'antd';
+import { Link } from 'react-router-dom';
+import routes from "../routes/routes";
+import { renderRoutes,matchRoutes } from 'react-router-config';
 import {
     MenuFoldOutlined,
     MenuUnfoldOutlined,
@@ -18,25 +21,36 @@ const { Header, Sider, Content } = Layout;
 const { TabPane } = Tabs;
 function Home(props){
     console.log(props)
+    let arr = matchRoutes(routes,props.location.pathname)
     const [states,setStates] = useState({
         collapsed: false,
         h1:null
     })
     //处理tabs
-    const panes = [
-        {title: 'Tab 1', content: 'Content of Tab Pane 1', key: '4' },
-        {title: 'Tab 2', content: 'Content of Tab Pane 2', key: '5' },
-    ];
+    const panes = [];
     const [tabsstate,setTabsstate] = useState({
-        activeKey: panes[0].key,
+        activeKey: 0,
         panes
-    })
-    useEffect(() => {
-
     })
     //修改激活状态
     let onChange = activeKey => {
         setTabsstate({...tabsstate,activeKey})
+        let pathname = ""
+        switch (activeKey) {
+            case "1":
+                pathname = "/home/first"
+                break;
+            case "2":
+                pathname = "/home/users"
+                break;
+            case "3":
+                pathname = "/home/roles"
+                break;
+            default:
+                pathname = "/home/first"
+                break;
+        }
+        props.history.push(pathname)
     };
     //增加tab
     let add = ({item,key}) => {
@@ -47,7 +61,23 @@ function Home(props){
         })
         const activeKey = key;  //唯一的
         if(!activeItem){
-            panes.push({title: 'New Tab', content: 'New Tab Pane', key: activeKey});
+            //给tab添加title
+            let title = ""
+            switch (activeKey) {
+                case "1":
+                    title="首页";
+                    break;
+                case "2":
+                    title="用户管理";
+                    break;
+                case "3":
+                    title="角色管理";
+                    break;
+                default:
+                    title="New";
+                    break;
+            }
+            panes.push({title, content: 'New Tab Pane', key: activeKey});
         }
         setTabsstate({panes,activeKey});
         // if(activeItem){
@@ -101,18 +131,18 @@ function Home(props){
                     </div>
                     <Menu theme="" mode="inline" defaultSelectedKeys={['1']} onClick={add}>
                         <Menu.Item key="1" icon={<UserOutlined/>}>
-                            首页
+                            <Link to="/home/first">首页</Link>
                         </Menu.Item>
                         <Menu.Item key="2" icon={<VideoCameraOutlined/>}>
-                            用户管理
+                            <Link to="/home/users">用户管理</Link>
                         </Menu.Item>
                         <Menu.Item key="3" icon={<UploadOutlined/>}>
-                            角色管理
+                            <Link to="/home/roles">角色管理</Link>
                         </Menu.Item>
                     </Menu>
                 </Sider>
             <Layout className="site-layout">
-                <Header className="site-layout-background" style={{ padding: 0,background:'#2f54eb'}} className="clear">
+                <Header className="site-layout-background" style={{ padding: 0,background:'#2f54eb'}}>
                 {React.createElement(states.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
                     className: 'trigger',
                     onClick: toggle,
@@ -139,7 +169,7 @@ function Home(props){
                 <Tabs hideAdd onChange={onChange} activeKey={tabsstate.activeKey} type="editable-card" onEdit={onEdit}>
                     {tabsstate.panes.map((pane) => (
                     <TabPane tab={pane.title} key={pane.key}>
-                        {pane.content}
+                        {renderRoutes(arr[0].route.routes)}
                     </TabPane>
                     ))}
                 </Tabs>
