@@ -1,0 +1,136 @@
+import { Divider, Table, Tag, Space, message, Popconfirm } from 'antd';
+import React, { useState } from 'react';
+import Talk from './Talk';
+
+//删除时确认的函数
+const confirm = (e) => {
+    console.log(e);
+    message.success('Click on Yes');
+  };
+  
+  const cancel = (e) => {
+    console.log(e);
+    message.error('Click on No');
+  };
+
+const columns = [    //表头
+  {
+    title: 'id',
+    dataIndex: 'id',
+  },
+  {
+    title: '用户名',
+    dataIndex: 'name',
+    render: (text) => <a>{text}</a>,
+  },
+  {
+    title: '年龄',
+    dataIndex: 'age',
+  },
+  {
+    title: '工作',
+    dataIndex: 'work',
+  },
+  {
+    title:"职位",
+    dataIndex: 'zhiwei',
+  },
+  {
+    title:"操作",
+    dataIndex: 'action',
+    render: (_, record) => {
+        return (
+            <Space size="middle">
+                <a><Talk></Talk></a>
+                <Popconfirm
+                    title={`您确定删除${record.name}?`}
+                    onConfirm={confirm}
+                    onCancel={cancel}
+                    okText="Yes"
+                    cancelText="No"
+                >
+                    <a href="#" style={{color:'red'}}>删除</a>
+                </Popconfirm>
+            </Space>
+        )
+    }   
+  },
+];
+//分页的效果
+let data = []
+for(let i=1;i<=100;i++){
+    data.push({
+        id: `${i}`,
+        key: `${i}`,
+        name: `张三${i}`,
+        age: '22',
+        work: '前端研发工程师',
+        zhiwei: '工程师'
+    })
+}
+// const data = [    //表格里面的内容
+//   {
+//     id: '1',
+//     key: "1",
+//     name: 'lwx',
+//     age: 42,
+//     work: 'CEO',
+//     zhiwei: '首席执行官',
+//   },
+//   {
+//     id: '2',
+//     key: "2",
+//     name: '小李',
+//     age: 20,
+//     work: '前端开发工程师',
+//     zhiwei: '研发工程师',
+//   },
+//   {
+//     id: '3',
+//     key: "3",
+//     name: '小王',
+//     age: 23,
+//     work: '后端开发工程师',
+//     zhiwei: '研发工程师',
+//   },
+//   {
+//     id: '4',
+//     key: "4",
+//     name: '小郑',
+//     age: 35,
+//     work: '架构师',
+//     zhiwei: '业务线主管',
+//   },
+// ]; // rowSelection object indicates the need for row selection
+
+const rowSelection = {
+  onChange: (selectedRowKeys, selectedRows) => {
+    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+  },
+  getCheckboxProps: (record) => ({
+    disabled: record.name === 'Disabled User',
+    // Column configuration not to be checked
+    name: record.name,
+  }),
+};
+
+const Tables = () => {
+  const [selectionType, setSelectionType] = useState('checkbox');
+  return (
+    <div>
+
+      <Divider />
+
+      <Table
+        rowSelection={{
+          type: selectionType,
+          ...rowSelection,
+        }}
+        columns={columns}
+        dataSource={data}
+      />
+    </div>
+  );
+};
+
+export default Tables;
