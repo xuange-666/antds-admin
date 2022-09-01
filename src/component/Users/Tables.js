@@ -1,6 +1,7 @@
 import { Divider, Table, Tag, Space, message, Popconfirm } from 'antd';
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import Talk from './Talk';
+import axios from 'axios';
 
 //删除时确认的函数
 const confirm = (e) => {
@@ -41,7 +42,7 @@ const columns = [    //表头
     render: (_, record) => {
         return (
             <Space size="middle">
-                <a><Talk></Talk></a>
+                <a><Talk user={record}></Talk></a>
                 <Popconfirm
                     title={`您确定删除${record.name}?`}
                     onConfirm={confirm}
@@ -57,51 +58,17 @@ const columns = [    //表头
   },
 ];
 //分页的效果
-let data = []
-for(let i=1;i<=100;i++){
-    data.push({
-        id: `${i}`,
-        key: `${i}`,
-        name: `张三${i}`,
-        age: '22',
-        work: '前端研发工程师',
-        zhiwei: '工程师'
-    })
-}
-// const data = [    //表格里面的内容
-//   {
-//     id: '1',
-//     key: "1",
-//     name: 'lwx',
-//     age: 42,
-//     work: 'CEO',
-//     zhiwei: '首席执行官',
-//   },
-//   {
-//     id: '2',
-//     key: "2",
-//     name: '小李',
-//     age: 20,
-//     work: '前端开发工程师',
-//     zhiwei: '研发工程师',
-//   },
-//   {
-//     id: '3',
-//     key: "3",
-//     name: '小王',
-//     age: 23,
-//     work: '后端开发工程师',
-//     zhiwei: '研发工程师',
-//   },
-//   {
-//     id: '4',
-//     key: "4",
-//     name: '小郑',
-//     age: 35,
-//     work: '架构师',
-//     zhiwei: '业务线主管',
-//   },
-// ]; // rowSelection object indicates the need for row selection
+// let data = []
+// for(let i=1;i<=100;i++){
+//     data.push({
+//         id: `${i}`,
+//         key: `${i}`,
+//         name: `张三${i}`,
+//         age: '22',
+//         work: '前端研发工程师',
+//         zhiwei: '工程师'
+//     })
+// }
 
 const rowSelection = {
   onChange: (selectedRowKeys, selectedRows) => {
@@ -116,6 +83,13 @@ const rowSelection = {
 
 const Tables = () => {
   const [selectionType, setSelectionType] = useState('checkbox');
+  const [data, setData] = useState([])
+  useEffect(() => {
+    axios.get("http://127.0.0.1:9000/users")
+    .then(res => {
+        setData(res.data)
+    })
+  },[])
   return (
     <div>
 

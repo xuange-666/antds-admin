@@ -1,17 +1,19 @@
-import { Modal } from 'antd';
+import { Modal, Button } from 'antd';
 import React, { useState } from 'react';
+import MyForm from './MyForm';
 
-const Talk = () => {
-  const [visible, setVisible] = useState(false);
-  const [confirmLoading, setConfirmLoading] = useState(false);
-  const [modalText, setModalText] = useState('Content of the modal');
+const Talk = (props) => {
+  console.log(props)
+  const [visible, setVisible] = useState(false);    //决定model的消失和显示
+  const [confirmLoading, setConfirmLoading] = useState(false);   //决定确认按钮的loading状态
+//   const [modalText, setModalText] = useState('Content of the modal');
 
   const showModal = () => {
     setVisible(true);
   };
 
   const handleOk = () => {
-    setModalText('The modal will be closed after two seconds');
+    // setModalText('The modal will be closed after two seconds');
     setConfirmLoading(true);
     setTimeout(() => {
       setVisible(false);
@@ -30,11 +32,14 @@ const Talk = () => {
       <Modal
         title="修改用户"
         visible={visible}
-        onOk={handleOk}
-        confirmLoading={confirmLoading}
-        onCancel={handleCancel}
+        footer={
+            [
+                <Button type='primary' onClick={handleOk} loading={confirmLoading}>保存</Button>,
+                <Button onClick={handleCancel}>重置</Button>
+            ]
+        }
       >
-        <p>{modalText}</p>
+        <p><MyForm formuser={props.user}></MyForm></p>
       </Modal>
     </>
   );
