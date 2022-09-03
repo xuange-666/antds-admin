@@ -8,10 +8,10 @@ let requestTable = (data) => {    //派发action
 }
 
 //异步请求
-let requestTableAsync = () => {
+let requestTableAsync = (url) => {
   return async (dispatch) => {
     //异步代码
-    let { data } = await axios.get("http://127.0.0.1:9000/users")
+    let { data } = await axios.get(url)
     dispatch(requestTable(data))
   }
 }

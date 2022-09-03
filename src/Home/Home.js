@@ -5,6 +5,7 @@ import { Layout, Menu, Breadcrumb } from 'antd';
 import { Button, Tabs } from 'antd';
 import { Link } from 'react-router-dom';
 import routes from "../routes/routes";
+import MyMenu from "../component/MyMenu/MyMenu";
 import { renderRoutes,matchRoutes } from 'react-router-config';
 import {
     MenuFoldOutlined,
@@ -52,43 +53,6 @@ function Home(props){
         }
         props.history.push(pathname)
     };
-    //增加tab
-    let add = ({item,key}) => {
-        console.log(item,key)
-        const {panes} = tabsstate;
-        let activeItem = panes.find((item,i) => {
-            return item.key === key;
-        })
-        const activeKey = key;  //唯一的
-        if(!activeItem){
-            //给tab添加title
-            let title = ""
-            switch (activeKey) {
-                case "1":
-                    title="首页";
-                    break;
-                case "2":
-                    title="用户管理";
-                    break;
-                case "3":
-                    title="角色管理";
-                    break;
-                default:
-                    title="New";
-                    break;
-            }
-            panes.push({title, content: 'New Tab Pane', key: activeKey});
-        }
-        setTabsstate({panes,activeKey});
-        // if(activeItem){
-        //     const activeKey = key;
-        //     setTabsstate({panes,activeKey});
-        // }else{
-        //     const activeKey = key;
-        //     panes.push({title: 'New Tab', content: 'New Tab Pane', key: activeKey});
-        //     setTabsstate({panes,activeKey});
-        // }
-    };
     //删除tab
     let remove = (targetKey) => {
         let {activeKey} = tabsstate;
@@ -129,17 +93,7 @@ function Home(props){
                         <img src={logo}></img>
                         <h1 ref={(h1) => {states.h1 = h1}}>React Admin</h1>
                     </div>
-                    <Menu theme="" mode="inline" defaultSelectedKeys={['1']} onClick={add}>
-                        <Menu.Item key="1" icon={<UserOutlined/>}>
-                            <Link to="/home/first">首页</Link>
-                        </Menu.Item>
-                        <Menu.Item key="2" icon={<VideoCameraOutlined/>}>
-                            <Link to="/home/users">用户管理</Link>
-                        </Menu.Item>
-                        <Menu.Item key="3" icon={<UploadOutlined/>}>
-                            <Link to="/home/roles">角色管理</Link>
-                        </Menu.Item>
-                    </Menu>
+                    <MyMenu tabsstate={tabsstate} setTabsstate={setTabsstate}></MyMenu>
                 </Sider>
             <Layout className="site-layout">
                 <Header className="site-layout-background" style={{ padding: 0,background:'#2f54eb'}}>

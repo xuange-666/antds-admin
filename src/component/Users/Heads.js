@@ -1,5 +1,7 @@
 import { Button, Form, Input } from 'antd';
 import React, { useEffect, useState } from 'react';
+import store from "../../store/store";
+import requestTableAsync from "../../store/actions";
 
 const Heads = () => {
   const [form] = Form.useForm();
@@ -9,8 +11,9 @@ const Heads = () => {
     forceUpdate({});
   }, []);
 
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     console.log('Finish:', values);
+    await store.dispatch(requestTableAsync(`http://127.0.0.1:9000/users?name=${values.name}`))
   };
 
   return (
@@ -43,7 +46,7 @@ const Heads = () => {
       <Form.Item shouldUpdate>
         {() => (
           <Button
-            htmlType="submit"
+            htmlType="reset"
           >
             重置
           </Button>

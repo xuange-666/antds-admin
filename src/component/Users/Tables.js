@@ -86,7 +86,7 @@ const Tables = () => {
   const [selectionType, setSelectionType] = useState('checkbox');
   const [data, setData] = useState([])
   useEffect(() => {
-    store.dispatch(requestTableAsync())  //异步的
+    store.dispatch(requestTableAsync("http://127.0.0.1:9000/users"))  //异步的
     setData(store.getState())
     store.subscribe(async () => {
       await setData(store.getState())
