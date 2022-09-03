@@ -1,7 +1,8 @@
 import { Divider, Table, Tag, Space, message, Popconfirm } from 'antd';
 import React, { useState,useEffect } from 'react';
 import Talk from './Talk';
-import axios from 'axios';
+import store from '../../store/store';
+import requestTableAsync from '../../store/actions'
 
 //删除时确认的函数
 const confirm = (e) => {
@@ -85,10 +86,12 @@ const Tables = () => {
   const [selectionType, setSelectionType] = useState('checkbox');
   const [data, setData] = useState([])
   useEffect(() => {
-    axios.get("http://127.0.0.1:9000/users")
-    .then(res => {
-        setData(res.data)
+    store.dispatch(requestTableAsync())  //异步的
+    setData(store.getState())
+    store.subscribe(async () => {
+      await setData(store.getState())
     })
+    console.log(store.getState())
   },[])
   return (
     <div>
