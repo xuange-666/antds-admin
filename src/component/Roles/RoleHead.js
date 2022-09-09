@@ -5,7 +5,7 @@ import axios from "axios";
 import "./role.css"
 
 const RoleHead = (props) => {
-  const { selectedRoleName } = props
+  const { selectedRoleName,ajaxRole } = props
   const [form] = Form.useForm();
   const [, forceUpdate] = useState({}); // To disable submit button at the beginning.
 
@@ -53,7 +53,7 @@ const RoleHead = (props) => {
         </Form.Item>
         <Form.Item shouldUpdate>
             {() => (
-                <RoleForm></RoleForm>
+                <RoleForm ajaxRole={ajaxRole}></RoleForm>
             )}
         </Form.Item>
         <div className='role-menu-tip'>

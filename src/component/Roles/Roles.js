@@ -27,13 +27,20 @@ function Roles(){
     await setSelectedRoleName(name)
     await setIsLoading(false)
   }
+  let ajaxRole = async () => {
+    setIsLoading(true)
+    const {data} = await axios.get("http://127.0.0.1:9000/roles")
+    console.log(data)
+    await setData(data) //异步的
+    await setIsLoading(false)
+  }
   let onChange = ( selectedRowKeys, selectedRows ) => {
     console.log(selectedRowKeys,selectedRows)
     setStates({selectedKeys:selectedRowKeys})
   }
   return (
     <Spin spinning={isLoading}>
-      <RoleHead selectedRoleName = {selectedRoleName}></RoleHead>
+      <RoleHead selectedRoleName = {selectedRoleName} ajaxRole={ajaxRole}></RoleHead>
       <Divider></Divider>
       <Layout>
         <Sider width="60%">

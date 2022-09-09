@@ -32,7 +32,7 @@ const useResetFormOnCloseModal = ({ form, visible }) => {
   }, [visible]);
 };
 
-const ModalForm = ({ visible, onCancel }) => {
+const ModalForm = ({ visible, onCancel,ajaxRole }) => {
   const [form] = Form.useForm();
   const [isLoading,setIsLoading] = useState(false)
   useResetFormOnCloseModal({
@@ -52,6 +52,8 @@ const ModalForm = ({ visible, onCancel }) => {
         console.log(res)
         setIsLoading(false)
         onCancel()
+        //表单输入完成后让页面出现加载状态，对数据进行渲染
+        ajaxRole()
     })
   }
   const onOk = () => {
@@ -101,7 +103,7 @@ const ModalForm = ({ visible, onCancel }) => {
   );
 };
 
-const RoleForm = () => {
+const RoleForm = (props) => {
   const [visible, setVisible] = useState(false);
 
   const showUserModal = () => {
@@ -129,7 +131,7 @@ const RoleForm = () => {
             添加
           </Button>
 
-          <ModalForm visible={visible} onCancel={hideUserModal} />
+          <ModalForm visible={visible} onCancel={hideUserModal} ajaxRole = {props.ajaxRole}/>
       </>
   );
 };
