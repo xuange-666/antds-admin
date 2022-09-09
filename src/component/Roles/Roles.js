@@ -11,7 +11,7 @@ function Roles(){
   const [isLoading,setIsLoading] = useState(true)
   const [states,setStates] = useState({selectedKeys:['首页','文档']})  //所有被选中的row的key值 
   const [data,setData] = useState([])
-  const [selectedRoleName,setSelectedRoleName] = useState("admin")
+  const [selectedRoleName,setSelectedRoleName] = useState("admin")   //状态值，是头部的角色人员
   useEffect(() => {
     const fetchData = async () => {
       const {data} = await axios.get("http://127.0.0.1:9000/roles")
@@ -21,9 +21,10 @@ function Roles(){
     }
     fetchData();
   },[])
-  let getMenus = async (id) => {   //用于获取单个角色的权限
+  let getMenus = async (id,name) => {   //用于获取单个角色的权限
     let {data} = await axios.get(`http://127.0.0.1:9000/roles?id=${id}`)
     await setStates({selectedKeys:data[0].menu})
+    await setSelectedRoleName(name)
     await setIsLoading(false)
   }
   let onChange = ( selectedRowKeys, selectedRows ) => {

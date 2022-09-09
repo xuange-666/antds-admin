@@ -73,7 +73,7 @@ const RoleTable = (props) => {
                 onClick: async function(ev){
                   console.log(record)
                     await props.setIsLoading(true)
-                    await props.getMenus(record.id)
+                    await props.getMenus(record.id,record.name)
                 }
             }
         }}

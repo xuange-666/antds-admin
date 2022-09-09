@@ -1,5 +1,6 @@
 import { Button, Form, Input } from 'antd';
 import React, { useEffect, useState } from 'react';
+import RoleForm from './RoleForm';
 import axios from "axios";
 import "./role.css"
 
@@ -52,12 +53,7 @@ const RoleHead = (props) => {
         </Form.Item>
         <Form.Item shouldUpdate>
             {() => (
-            <Button
-                type="primary"
-                htmlType="submit"
-            >
-                添加
-            </Button>
+                <RoleForm></RoleForm>
             )}
         </Form.Item>
         <div className='role-menu-tip'>
