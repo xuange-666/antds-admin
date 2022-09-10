@@ -7,6 +7,7 @@ import NotFound from "../404/404";
 import Users from "../component/Users/Users";
 import Roles from "../component/Roles/Roles";
 import First from "../component/First/First";
+import Editor from "../Editor/Editor";
 //统一管理路由
 export default [
     {
@@ -31,6 +32,12 @@ export default [
     {
         path:"/login",
         component:Login,
+        auth:false,
+        exact:true
+    },
+    {
+        path:"/editor",
+        component:Editor,
         auth:false,
         exact:true
     },

@@ -2,10 +2,11 @@ import { Button, Form, Input } from 'antd';
 import React, { useEffect, useState } from 'react';
 import RoleForm from './RoleForm';
 import axios from "axios";
-import "./role.css"
+import "./role.css";
+import qs from 'qs';
 
 const RoleHead = (props) => {
-  const { selectedRoleName,ajaxRole } = props
+  const { selectedRoleName,ajaxRole,data,states } = props
   const [form] = Form.useForm();
   const [, forceUpdate] = useState({}); // To disable submit button at the beginning.
 
@@ -15,6 +16,18 @@ const RoleHead = (props) => {
 
   const onFinish = async (values) => {
     console.log('Finish:', values);
+  };
+
+  const save = async () => {  //给角色分配权限
+    props.setIsLoading(true)
+    let id = data.findIndex((item,index) => {
+        return item.name === selectedRoleName
+      })
+    const { key,name,describle } = data[id]
+    await axios.put(`http://127.0.0.1:9000/roles/${id}`,qs.stringify({key,name,describle,menu:JSON.stringify(states.selectedKeys)}))
+    await props.setIsLoading(false)
+    
+    //menu:JSON.stringify(states.selectedKeys) ["首页"]
   };
 
   return (
@@ -58,7 +71,7 @@ const RoleHead = (props) => {
         </Form.Item>
         <div className='role-menu-tip'>
             {selectedRoleName ? <span className='font'>当前角色权限：{selectedRoleName}</span>:<span className='font'>请在左侧列表中选择一个角色！</span>}
-            <Button disabled={!selectedRoleName} type="primary">保存权限</Button>
+            <Button disabled={!selectedRoleName} type="primary" onClick={save}>保存权限</Button>
         </div>
         </Form>
     </>
